@@ -1,0 +1,38 @@
+#include <stdio.h> 
+#include <stdlib.h> 
+#include <string.h>
+
+int main(){
+	int i, n, p = 1, counter = 0, s;
+	char letter, string[50] = { NULL };
+	int *count=NULL, *pointd = NULL;
+	char *ch=NULL, *pointc = NULL;
+
+	printf("Enter string:");
+	gets(string);
+	s = (strlen(string));
+	for (i = 0; i <= s; i++, p++){
+		pointc = (char*)realloc(ch, p*sizeof(char));
+		pointd = (int*)realloc(count, p*sizeof(int));
+		if (pointd != NULL & pointc != NULL){
+			count = pointd;
+			ch = pointc;
+		}
+		counter = 0;
+		letter = string[i];
+		if (strchr(ch, letter) == NULL){
+			for (n = 0; n <= s; n++){
+				if (letter == string[n])
+					counter++;
+			}
+			ch[i] = letter;
+			count[i] = counter;
+			
+			printf("\n letter %c appears %d times", ch[i], count[i]);
+	}
+	
+	}
+	free(ch);
+	free(count);
+	return 0;
+}
