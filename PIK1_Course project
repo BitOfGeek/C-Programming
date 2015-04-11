@@ -1,0 +1,122 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX 250
+void funcOne(FILE *p);
+int funcTwo(FILE *p);
+int funcThree(FILE *p);
+
+int main(){
+	int choice, i;
+	char name[8];
+	char c = '.c';
+	FILE *fp = NULL;
+
+	printf("Choose a file: \n");
+	printf(" - main1\n - main2\n - main3\n");
+	printf("Write file name with .c at the end: \n");
+	fgets(name, 8, stdin);
+
+	while (strchr(name, c) == NULL){
+		printf("Write file name with .c at the end: \n");
+		fgets(name, 8, stdin);
+	}
+
+	printf("\n\n---Menu---\n");
+	printf("1- Count the number of ';' in the file\n");
+	printf("2- The ratio between the count of numbers on a row and the count of \n numbers in the file\n");
+	printf("3- The count of rows with '//' comments\n");
+	printf("0- Exit\n");
+
+	printf("\nEnter choice:");
+	scanf("%d", &choice);
+
+	while (choice>3){
+		printf("You haven't chosen a function!\n");
+		printf("\nEnter choice:");
+		scanf("%d", &choice);
+	}
+
+	for (choice; choice < 4 && choice !=0;){
+		switch (choice){
+		case 1: fp = fopen(name, "r");
+			funcOne(fp);
+			fclose(fp);
+			break;
+
+		case 2:
+			fp = fopen(name, "r");
+			funcTwo(fp);
+			fclose(fp); break;
+
+		case 3: 
+			fp = fopen(name, "r");
+			funcThree(fp);
+			fclose(fp); break;
+		}
+
+			printf("\nEnter choice:");
+			scanf("%d", &choice);
+	
+
+	}
+	
+	return 0;
+}
+void funcOne(FILE *p){
+	int br1 = 0;
+	char one;
+	if (p != NULL){
+		while ((fscanf(p, "%c", &one)) > 0) {
+			if (one == ';') br1++;
+		}
+		printf("\nTotal number of ';' equals to: %d\n", br1);
+	}
+}
+int funcTwo(FILE *p){
+	char line[MAX];
+	int br2 = 0, allbr = 0, r = 1, i, c;
+	int sum;
+	while ((fgets(line, MAX, p)) != NULL){
+		for (i = 0; i<strlen(line); i++){
+			if (isdigit(line[i]))br2++;
+		}
+		allbr += br2;
+		br2 = 0;
+	}
+	rewind(p); 
+	for (c = 0; c < 41; c++){
+		printf("%c", '_');
+	}
+		printf("\n|  Roll\t   |\t   Digits   |  All\t|\n");
+	while ((fgets(line, MAX, p)) != NULL){
+
+		for (i = 0; i<strlen(line); i++){
+			if (isdigit(line[i]))br2++;
+		}
+		for (c = 0; c < 41; c++){
+			printf("%c", '_');
+		}
+		printf("\n|    %d\t   |\t    %d\t    |\t   %d/%d\t|\n", r, br2, br2, allbr); br2 = 0;
+		if (line[strlen(line) - 1] == '\n')r++;
+	}
+	for (c = 0; c < 41; c++){
+		printf("%c", '_');
+	}
+}
+int funcThree(FILE *p){
+	char three;
+	int br3=0;
+	if (p != NULL){
+		while ((fscanf(p, "%c", &three)) > 0) {
+			if (three == '/') {
+				(fscanf(p, "%c", &three));
+				if (three == '/')
+					br3++;
+			}
+				
+		}
+		printf("\nTotal number of '//' equals to: %d\n", br3);
+	}
+	
+}
