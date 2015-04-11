@@ -1,0 +1,108 @@
+#include <stdio.h>
+int main(){
+	int a, b, c, m1, m2, x, y, i, m, be, k;
+	int beg, end, step;
+
+	printf("a="); scanf("%d", &a);
+	printf("b="); scanf("%d", &b);
+	printf("c="); scanf("%d", &c);
+	printf("x="); scanf("%d", &x);
+	/*while (x == 4){
+		Printf("x cannot equal 4\n");
+		printf("x=");
+		scanf("%d", &x);
+	}*/
+	printf("m1="); scanf("%d", &m1);
+	printf("m2="); scanf("%d", &m2);
+	if (m1 > m2){
+		m = m1;
+		m1 = m2;
+		m2 = m;
+	}
+	/*while (m1 > m2){
+		printf("m1 cannot be larger than m2\n");
+		printf("m1="); scanf("%d", &m1);
+		printf("m2="); scanf("%d", &m2);
+	}*/
+	printf("beg="); scanf("%d", &beg);
+	printf("end="); scanf("%d", &end);
+	if (beg>end){
+		be = beg;
+		beg = end;
+		end = be;
+	}
+	/*while (beg > end){
+		printf("beg cannot be larger than end\n");
+		printf("beg="); scanf("%d", &beg);
+		printf("end="); scanf("%d", &end);
+	}*/
+	printf("step="); scanf("%d", &step);
+
+	k = x;
+	if (x < (m1 + 1) && x>(beg - 1) && x < (end + 1)){
+		printf("y=b+x\n");
+		for (i = 0; i < 49; i++){
+			printf("%c", '_');
+		}
+		printf("\n|\tb\t|\tx\t|\ty\t|\n");
+
+		for (x; x < (m1 + 1) && x>(beg - 1) && x < (end + 1);){
+			y = b + x;
+			for (i = 0; i < 49; i++){
+				printf("%c", '_');
+			}
+			printf("\n|\t%d\t|\t%d\t|\t %d\t|\n", b, x, y);
+			x = x + step;
+		}
+		for (i = 0; i < 49; i++){
+			printf("%c", '_');
+		}
+	}
+	x = k;
+		if (x >(m1 - 1) && x<(m2 + 1) && x>(beg - 1) && x < (end + 1)){
+			printf("\ny=a*x/4-x\n");
+			for (i = 0; i < 49; i++){
+				printf("%c", '_');
+			}
+			printf("\n|\ta\t|\tx\t|\ty\t|\n");
+			for (x; x >(m1 - 1) && x<(m2 + 1) && x>(beg - 1) && x < (end + 1);){
+				if (x == 4){
+					for (i = 0; i < 49; i++){
+						printf("%c", '_');
+					}
+					printf("\n|\t%d\t|\t %d\t|\t-\t|\n", a, x);
+				}
+				else{
+					y = a*x / (4 - x);
+				}
+				for (i = 0; i < 49; i++){
+					printf("%c", '_');
+				}
+				printf("\n|\t%d\t|\t %d\t|\t%d\t|\n", a, x, y);
+				x = x + step;
+			}
+			for (i = 0; i < 49; i++){
+				printf("%c", '_');
+			}
+		}
+		x = k;
+	if (x>(m2 - 1) && x >(beg - 1) && x < (end + 1)){
+		printf("\ny=c+x\n");
+		for (i = 0; i < 49; i++){
+			printf("%c", '_');
+		}
+		printf("\n|\tc\t|\tx\t|\ty\t|\n");
+		for (x; x>(m2 - 1) && x >(beg - 1) && x < (end + 1);){
+			y = c + x;
+			for (i = 0; i < 49; i++){
+				printf("%c", '_');
+			}
+			printf("\n|\t%d\t|\t %d\t|\t%d\t|\n", c, x, y);
+			x = x + step;
+		}
+		for (i = 0; i < 49; i++){
+			printf("%c", '_');
+		}
+	}
+	return 0;
+}
