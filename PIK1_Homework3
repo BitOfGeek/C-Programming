@@ -1,0 +1,87 @@
+
+#include <stdio.h>
+#include <string.h>
+#include <math.h> 
+
+
+FILE *fp = NULL;
+void funcOne(FILE *fp, int number, int *number1, int *number2);
+void funcTwo(FILE *fp, int *max, int *min, int *fnum);
+
+main(){
+	char name[81];
+	int choice, number1, number2, number = 0, fnum;
+	int max = 0, min = 1000;
+	int i = 0;
+
+	printf("Choose file name with .txt at the end:");
+	gets(name);
+
+	printf("---MENU---\n");
+	printf("1- Input numbers to save in a file\n");
+	printf("2- Largest and smallest number in the file and the result from their substraction\n");
+	printf("0- Exit\n");
+
+	printf("Enter choice:");
+	scanf("%d", &choice);
+	fflush(stdin);
+	//printf("%d", max);
+	while (choice > 3){
+		printf("You haven't chosen a function!\n");
+		printf("Enter choce:");
+		scanf("%d", &choice);
+	}
+
+	for (choice; choice < 3;){
+		switch (choice){
+		case 1:
+			fp = fopen(name, "w");
+			funcOne(fp, number, &number1, &number2);
+			fclose(fp);
+			break;
+		case 2: fp = fopen(name, "r");
+
+			funcTwo(fp, &max, &min, &fnum);
+			printf("Largest number in file: %d \n", max);
+			printf("Smallest number in file: %d \n", min);
+			printf("Max-Min= %d - %d= %d \n", max, min, (max - min));
+			fclose(fp);
+			break;
+		}
+		if (choice != 0){
+			printf("Enter choice:");
+			scanf("%d", &choice);
+		}
+		else{ break; return 0; }
+	}
+	return 0;
+}
+void funcOne(FILE *fp, int number, int *number1, int *number2){
+	if (fp != NULL){
+		for (;;){
+			printf("Input numbers:");
+			number = scanf("%d %d", &number1, &number2);
+
+			if (number != EOF){
+				fprintf(fp, "%d %d\n", number1, number2);
+			}
+			else { break; };
+		}
+	}
+}
+void funcTwo(FILE *fp, int *max, int *min, int *fnum){
+	fflush(stdin);
+	*max = -100;
+	printf("%d\n", *max);
+	if (fp != NULL){
+		while ((fscanf(fp, "%d", fnum)) > 0) {
+			if (*fnum > *max)
+				*max = *fnum;
+			if (*fnum < *min)
+				*min = *fnum;
+		}
+		/*printf("Largest number in file: %d \n", *max);
+		printf("Smallest number in file: %d \n", *min);
+		printf("Max-Min= %d - %d= %d \n", *max, *min, (*max - *min));*/
+	}
+}
