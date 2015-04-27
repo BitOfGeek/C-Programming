@@ -1,0 +1,174 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+//1
+int main(){
+	int a, b, i = 1500;
+
+	FILE *fp;
+	FILE *fp1;
+
+	fp= fopen("txt", "w");
+	fp1= fopen("binary", "wb");
+
+	fprintf(fp, "%d", i);
+	fwrite(&i, sizeof(int), 1, fp1);
+
+	fclose(fp);
+	fclose(fp1);
+
+	fp = fopen("txt", "r");
+	fp1 = fopen("binary", "rb");
+
+	fscanf(fp, "%d", &a);
+	fread(&b, sizeof(int), 1, fp1);
+
+	printf("%d %d", a, b);
+
+	fclose(fp);
+	fclose(fp1);
+
+	return 0;
+}
+
+
+//2
+int main(){
+
+			int a = 5, b, i;
+			FILE *fp;
+			char mas[] = "My name is Ivan.I am ";
+			char mas2[] = " years old!";
+			char mas1[sizeof mas]; /* масив с големината на масив mas */
+			char mas3[sizeof mas2]; /* масив с големината на масив mas2 */
+			if ((fp = fopen("myfile", "wb")) == NULL) /* отваря файл за запис*/
+			{
+				printf("cant open the file");
+				exit(1);
+			}
+			if (fwrite(mas, 1, strlen(mas), fp) != strlen(mas)) /*записва масива mas във файла*/
+			{
+				printf("write error occurred");
+				exit(2);
+			}
+			if (fwrite(&a, sizeof(int), 1, fp) != 1) /* записва променливата а във фаила*/
+			{
+				printf("write error occurred");
+				exit(3);
+			}
+			if (fwrite(mas2, 1, strlen(mas2), fp) != strlen(mas2)) /*записва масива mas във файла*/
+			{
+				printf("write error occurred");
+				exit(4);
+			}
+			fclose(fp);
+			if ((fp = fopen("myfile", "rb")) == NULL) /* отваря файл за четене*/
+			{
+				printf("cant open the file");
+				exit(5);
+			}
+			if (fread(mas1, 1, (sizeof mas1) - 1, fp) != ((sizeof mas1) - 1)) /* чете от файла и записва в масива mas1 */
+			{
+				printf("read error occurred");
+				exit(6);
+			}
+			if (fread(&b, sizeof(int), 1, fp) != 1) /*чете от файла годините и записва в b */
+			{
+				printf("read error occurred");
+				exit(7);
+			}
+			if (fread(mas3, 1, (sizeof mas3) - 1, fp) != (sizeof mas3) - 1) /* чете от файла и записва в масива mas3 */
+			{
+				printf("read error occurred");
+				exit(8);
+			}
+			fclose(fp);
+
+			for (i = 0; i<(sizeof mas1) - 1; i++) /* отпечатва информацията последователно на екрана*/
+				printf("%c", mas1[i]);
+			printf("%d", b);
+			for (i = 0; i<(sizeof mas3) - 1; i++)
+				printf("%c", mas3[i]);
+			return 0;
+}
+
+void writening();
+void reading();
+main(){
+	char choise;
+	do{
+		printf("Enter 1 for writening in file and 2 for reading!\n");
+		choise = getchar();
+		fflush(stdin);
+	} 
+	while (choise != '1'&&choise != '2');
+	switch (choise){
+	case '1':
+		writening();
+		break;
+	case '2':
+		reading();
+		break;
+	}
+	return 0;
+}
+void writening(){
+	int i, number, j;
+	double price;
+	char article[50];
+	FILE *fp;
+	printf("enter the string less than 50\n");
+	gets(article);
+	j = ((sizeof(article)));
+		printf("enter the number");
+	scanf("%d", &number);
+	printf("enter the price");
+	scanf("%lf", &price);
+	if ((fp = fopen("withIn", "ab")) == NULL)
+		printf("the file cant open");
+	if (fwrite(&number, sizeof(int), 1, fp) != 1)
+		printf("writening error");
+	if (fwrite(&j, sizeof(int), 1, fp) != 1)
+		printf("writening error");
+	if (fwrite(article, sizeof (article), 1, fp) != 1)
+		printf("writening error");
+	if (fwrite(&price, sizeof(double), 1, fp) != 1)
+		printf("writening error");
+	fclose(fp);
+}
+void reading()
+{
+	int i, number, number1;
+	char article[50];
+	double price;
+	FILE *fp;
+	printf("enter the number");
+	scanf("%d", &number1);
+	if ((fp = fopen("withIn", "rb")) == NULL)
+		printf("the file cant open");
+	for (;;){
+		if (fread(&number, sizeof(int), 1, fp) != 1){
+			printf("reading error");
+			break;
+		}
+		if (fread(&i, sizeof(int), 1, fp) != 1){
+			printf("readung error");
+			exit(1);
+		}
+		if (fread(article, 1, i, fp) != i){
+				printf("reading error");
+			exit(7);
+		}
+		if (fread(&price, sizeof(double), 1, fp) != 1){
+			printf("reading error");
+			exit(5);
+		}
+		if (number == number1){
+			printf(" %d ", number);
+			printf(article);
+			printf(" %g", price);
+			break;
+		}
+	}
+	fclose(fp);
+}
