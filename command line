@@ -1,0 +1,70 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+//1
+int main(int argc, char* argv[]){
+char string[50];
+sprintf(string, "args.exe %c %c", argv[1], argv[2]);
+system(string);
+return 0;
+}
+
+//2
+int main(int argc, char* argv[]){
+int i;
+char name[50];
+double n;
+
+name=argv[1];
+n=atof(argv[2]);
+
+FILE *fp;
+fp = fopen("name","wb");
+for (i=1;i<n+1;i++){
+fwrite (i,sizeof(int),1,fp);
+}
+return 0;
+}
+
+//3
+int main(int argc, char* argv[]){
+int n;
+FILE *fp, fp1;
+fp=fopen(argv[1],"rb");
+fp=fopen("txt", w);
+while(fread(&n,1,sizeof(int),fp)>0){
+fprintf(fp1,"%d",n);
+}
+return 0;
+}
+
+//4
+int car();
+int bus();
+int bike();
+
+int main(){
+int choice;
+int (*fp)();
+
+printf("Choose a method of transportation: \n1.car \n2.bus \n3.bike \0. exit")
+scnaf("%d", choice);
+
+if (choice!=0){
+fp=*choice //tova e samo shematichno napisano, zashtoto c mislq che ne poddurva funkciq da se zadawa ot promenliva imeto...
+printf("your choice is: %c", fp());
+}
+else break;
+
+return 0;
+}
+
+int car(){
+return "car";
+}
+int bus(){
+return "bus";
+}
+int bike(){
+return "bike";
+}
