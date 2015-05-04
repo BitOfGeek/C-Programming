@@ -1,0 +1,24 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+int main (int argc, char* argv[]){
+int i,n,k,d;
+char *string1, *string2;
+
+for(i=argc-1; i>=0; i--){
+	n=strlen(argv[i]);
+	char str[50];
+	stirng1=(char*) calloc(sizeof(char),n);
+	string1=argv[i];
+	stirng2=(char*) calloc(sizeof(char),n);
+	for(k=n-1, d=0;k>=0; k--,d++)
+		stirng2[d]=stirng1[k];
+	if(i==argc-1){
+	sprintf(str, "print.exe %s", stirng2);
+	system(str);
+	}
+	printf("%s", stirng2);
+}
+return 0;
+}
