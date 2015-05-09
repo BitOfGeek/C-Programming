@@ -1,0 +1,31 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main(){
+	int a, b, i = 1500;
+
+	FILE *fp;
+	FILE *fp1;
+
+	fp= fopen("txt", "w");
+	fp1= fopen("binary", "wb");
+
+	fprintf(fp, "%d", i);
+	fwrite(&i, sizeof(int), 1, fp1);
+
+	fclose(fp);
+	fclose(fp1);
+
+	fp = fopen("txt", "r");
+	fp1 = fopen("binary", "rb");
+
+	fscanf(fp, "%d", &a);
+	fread(&b, sizeof(int), 1, fp1);
+
+	printf("%d %d", a, b);
+
+	fclose(fp);
+	fclose(fp1);
+
+	return 0;
+}
