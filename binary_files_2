@@ -1,52 +1,52 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 int main(){
+int a = 5, b, i;
+FILE *fp;
+char mas[] = "My name is Ivan.I am ";
+char mas2[] = " years old!";
+char mas1[sizeof mas];
+char mas3[sizeof mas2];
+if ((fp = fopen("myfile", "wb")) == NULL) {
+	printf("cant open the file");
+	exit(1);
+}
+if (fwrite(mas, 1, strlen(mas), fp) != strlen(mas)){
+	printf("write error occurred");
+	exit(2);
+}
+if (fwrite(&a, sizeof(int), 1, fp) != 1){
+	printf("write error occurred");
+	exit(3);
+}
+if (fwrite(mas2, 1, strlen(mas2), fp) != strlen(mas2)) {
+	printf("write error occurred");
+	exit(4);
+}
+fclose(fp);
+if ((fp = fopen("myfile", "rb")) == NULL){
+	printf("cant open the file");
+	exit(5);
+}
+if (fread(mas1, 1, (sizeof mas1) - 1, fp) != ((sizeof mas1) - 1)){
+	printf("read error occurred");
+	exit(6);
+}
+if (fread(&b, sizeof(int), 1, fp) != 1){
+	printf("read error occurred");
+	exit(7);
+}
+if (fread(mas3, 1, (sizeof mas3) - 1, fp) != (sizeof mas3) - 1){
+	printf("read error occurred");
+	exit(8);
+}
+fclose(fp);
 
-			int a = 5, b, i;
-			FILE *fp;
-			char mas[] = "My name is Ivan.I am ";
-			char mas2[] = " years old!";
-			char mas1[sizeof mas];
-			char mas3[sizeof mas2];
-			if ((fp = fopen("myfile", "wb")) == NULL) {
-				printf("cant open the file");
-				exit(1);
-			}
-			if (fwrite(mas, 1, strlen(mas), fp) != strlen(mas)){
-				printf("write error occurred");
-				exit(2);
-			}
-			if (fwrite(&a, sizeof(int), 1, fp) != 1){
-				printf("write error occurred");
-				exit(3);
-			}
-			if (fwrite(mas2, 1, strlen(mas2), fp) != strlen(mas2)) {
-				printf("write error occurred");
-				exit(4);
-			}
-			fclose(fp);
-			if ((fp = fopen("myfile", "rb")) == NULL){
-				printf("cant open the file");
-				exit(5);
-			}
-			if (fread(mas1, 1, (sizeof mas1) - 1, fp) != ((sizeof mas1) - 1)){
-				printf("read error occurred");
-				exit(6);
-			}
-			if (fread(&b, sizeof(int), 1, fp) != 1){
-				printf("read error occurred");
-				exit(7);
-			}
-			if (fread(mas3, 1, (sizeof mas3) - 1, fp) != (sizeof mas3) - 1){
-				printf("read error occurred");
-				exit(8);
-			}
-			fclose(fp);
-
-			for (i = 0; i<(sizeof mas1) - 1; i++) 
-				printf("%c", mas1[i]);
-			printf("%d", b);
-			for (i = 0; i<(sizeof mas3) - 1; i++)
-				printf("%c", mas3[i]);
-			return 0;
+for (i = 0; i<(sizeof mas1) - 1; i++) 
+	printf("%c", mas1[i]);
+printf("%d", b);
+for (i = 0; i<(sizeof mas3) - 1; i++)
+	printf("%c", mas3[i]);
+return 0;
 }
