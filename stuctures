@@ -8,6 +8,7 @@ typedef struct{
 
 void perimeter(Rectangle *rect);
 void area(Rectangle *rect);
+void file(Rectangle *rect);
 
 int main(){
 	Rectangle rect;
@@ -32,4 +33,13 @@ void area(Rectangle *rect){
 	double result;
 	result = (rect->height)*(rect->width);
 	printf("\nThe area is %g", result);
+}
+
+void file(Rectangle *rect){
+	FILE *fp;
+	if ((fp = fopen("file", "ab+")) != NULL){
+		fwrite(rect, sizeof(Rectangle), 1, fp);
+	}
+	else { printf("Error while opening"); }
+	fclose(fp);
 }
