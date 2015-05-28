@@ -1,0 +1,28 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+typedef struct node{
+	char cat_number[20];
+	char title[80];
+	char author[50];
+	double price;
+	int year;
+	char publisher[80];
+}catalog;
+typedef struct cList{
+	char cat_number[20];
+	char title[80];
+	char author[50];
+	double price;
+	int year;
+	char publisher[80];
+	struct cList *next;
+}ccList;
+
+ccList* addNew(ccList *head);
+ccList* readFile();
+void saveFile(ccList *head);
+ccList* update(char *num, ccList*head);
+void search_title(ccList*head, char *title);
+void search_author(ccList*head, char *author);
