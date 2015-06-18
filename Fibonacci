@@ -1,0 +1,46 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+int main(){
+	int i = 0, counter1 = 10, size_multiplayer = 1, num;
+	long double *fibonacci; //*fibonacci2;
+	time_t start, end, diff;
+
+	fibonacci = (long double*)calloc(3, sizeof(long double));
+	fibonacci[0] = 0;
+	fibonacci[1] = 1;
+	fibonacci[2] = 0;
+
+	printf("Enter how many Fibonacci numbers to calculate: ");
+	scanf("%d", &num); //number of calculations
+	printf("%f", fibonacci[2]); //first number is always 0
+	start = time(NULL); //starts timing
+	for (i; i<num; i++){
+		if (i == counter1 + 1){
+			start = time(NULL); //starts timing again on every 10 calculations
+			counter1 += 10;
+		}
+		//if (sizeof(fibonacci[1] + fibonacci[2]) >= sizeof(double)*size_multiplayer){
+		//	//size_multiplayer*=2;
+		//	fibonacci2 = fibonacci;
+		//	fibonacci = (double*)calloc(3, size_multiplayer* sizeof(double));
+		//	if (fibonacci != 0)
+		//		fibonacci = fibonacci2;
+		//}
+		fibonacci[2] = fibonacci[0] + fibonacci[1];// fibonacci formula
+		fibonacci[0] = fibonacci[1];
+		fibonacci[1] = fibonacci[2];
+		printf("\n%.4f", fibonacci[2]);
+		if (i == counter1-1){//after avery 10 claculations stops the timer and displays the execution time
+			end = time(NULL);
+			diff = end - start;
+			printf("\nTime it took to execute: %u", diff);
+		}
+		/*It may display zeros because the execution time is too short and 
+		windows does not support <sys/time.h> to calculate the time in less than a millisecond.
+		If you try to execute the code with the debbuger it shows the accurate time...*/
+	}
+	free(fibonacci);
+	return 0;
+}
